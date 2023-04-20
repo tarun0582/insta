@@ -1,20 +1,11 @@
 <nav class="navbar navbar-expand " style="background-color: #e3f2fd;">
-    
-  
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-    
-      <li class="nav-item">
-        <button class="btn btn-primary" (click)="logOut()">Logout</button>
+      <li class="nav-item" *ngFor="let nav of nav_link">
+        <button class="btn btn-primary nav-btn" (click)="nav.action()">{{nav.label}}</button>
       </li>
-      <li class="nav-item">
-        <button class="btn btn-primary" (click)="Home()">Home Post</button>
-      </li>
-      <li class="nav-item">
-        <button class="btn btn-primary" (click)="CreateReals()">create real</button>
-      </li>
-      <li class="nav-item">
-        <button class="btn btn-primary" (click)="ViewReels()">view real</button>
+      <li class="nav-item" >
+        <button class="btn btn-primary nav-btn" (click)="report()">report</button>
       </li>
     </ul>
   </div>

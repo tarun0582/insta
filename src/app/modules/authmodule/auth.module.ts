@@ -6,23 +6,21 @@ import { SignUpComponent } from './components/signup/signup.component';
 import { MainComponent } from './components/main/main.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './components/login/login.component';
-import { environment } from 'src/app/core/environment';
 import { AngularFireModule } from '@angular/fire/compat';
-
 import { HttpClientModule } from '@angular/common/http';
 import { FirestoreModule } from '@angular/fire/firestore';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AuthenticationService } from 'src/app/core/services/authentication-services/authentication.service';
-import { StoreService } from 'src/app/core/services/firestore-service/store.service';
-import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { environment } from 'src/environments/environment';
+
 @NgModule({
   declarations: [LoginComponent,ForgotComponent,SignUpComponent,MainComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     AuthRoutingModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebase),
     HttpClientModule,
     FirestoreModule,
     SweetAlert2Module ,
@@ -31,7 +29,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   ],
   providers: [AuthenticationService],
   exports:[
-  ]
-  
+  ] 
 })
 export class AuthModule { }

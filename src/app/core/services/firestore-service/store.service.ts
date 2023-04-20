@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat
 import { User, post } from '../../interface';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthenticationService } from '../authentication-services/authentication.service';
+import { collection } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,11 @@ import { AuthenticationService } from '../authentication-services/authentication
 export class StoreService {
 
 
- email:string='';
- constructor(private store: AngularFirestore, private storage: AngularFireStorage ,private authData:AuthenticationService) { 
-  this.email+=this.authData.getToken('email')
-  console.log(this.email)
- }
+  email: string = '';
+  constructor(private store: AngularFirestore, private storage: AngularFireStorage, private authData: AuthenticationService) {
+    this.email += this.authData.getToken('email')
+    console.log(this.email)
+  }
   addUser(data: any, id: string): Promise<AngularFirestoreDocument<User>> {
     const customId = data.email;
     const user: User = { name: data.fullName, userName: data.userName, email: data.email, userId: id };
@@ -38,7 +39,6 @@ export class StoreService {
     const filePath = `post/${Date.now()}_${image.name}`;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, image);
-  
     return new Promise((resolve, reject) => {
       task
         .snapshotChanges()
@@ -60,7 +60,7 @@ export class StoreService {
       description: postData.postDescription,
       userId: id,
       email: email,
-      report:false,
+      report: false,
     };
     this.store.collection(`post`).add(post)
       .then((docRef) => {
@@ -101,7 +101,7 @@ export class StoreService {
         });
     });
   }
-  Getlike(postId:any,likes:any,) {
+  Getlike(postId: any, likes: any,) {
     return new Promise((resolve, reject) => {
       this.store.collection(likes, ref => ref.where('postId', '==', postId))
         .snapshotChanges()
@@ -118,9 +118,9 @@ export class StoreService {
         });
     });
   }
-  checkUser(postId: any,likes:any) {
+  checkUser(postId: any, likes: any) {
     return new Promise((resolve, reject) => {
-      this.store.collection(likes, ref => ref.where('email', '==', this.email).where('postId','==',postId))
+      this.store.collection(likes, ref => ref.where('email', '==', this.email).where('postId', '==', postId))
         .snapshotChanges()
         .subscribe((data) => {
           const comments = data.map((comment) => {
@@ -135,25 +135,27 @@ export class StoreService {
         });
     });
   }
-  addLike(postId: any,likes:any) {
-    const like = {
-      postId:postId,
-      email:this.email
-    }
-    this.store.collection(likes).add(like).then((docRef) => {
-      console.log("Document written with ID: ", docRef.id,"hellolike");
-    })
-      .catch((error) => {
-        console.error("Error adding document: ", error);
-      });
+  addLike(postId: any, likes: any) {
+      console.log("liking thrice")
+      const like = {
+        postId: postId,
+        email: this.email
+      }
+      this.store.collection(likes).add(like).then((docRef) => {
+        console.log("Document written with ID: ", docRef.id, "hellolike", like, "collection", likes);
+      })
+        .catch((error) => {
+          console.error("Error adding document: ", error);
+        });
+    
   }
-  deleteLike(postId: any,likes:any) {
+  deleteLike(postId: any, likes: any) {
     const email = this.authData.getToken('email')
     return new Promise((resolve, reject) => {
       this.store.collection(likes, ref => ref.where('email', '==', email).where('postId', '==', postId))
         .snapshotChanges()
-        .subscribe((data) => {
-          data.forEach((doc: any) => {
+        .subscribe((data:any) => {
+          data.forEach((doc:any) => {
             doc.payload.doc.ref.delete();
           });
           resolve(data);
@@ -163,12 +165,12 @@ export class StoreService {
         });
     });
   }
-  reportPost(id:any,value:boolean ) {
-     this.store.collection("post").doc(id).update({
-      report:value,
+  reportPost(id: any, value: boolean) {
+    this.store.collection("post").doc(id).update({
+      report: value,
     })
   }
-  getPost(report:boolean) {
+  getPost(report: boolean) {
     return new Promise((resolve, reject) => {
       this.store.collection('post', ref => ref.where('report', '==', report))
         .snapshotChanges()
@@ -184,7 +186,6 @@ export class StoreService {
           console.log(error)
         });
     });
-    
   }
 }
 

@@ -6,12 +6,9 @@ import { AuthGuard } from './core/gurds/auth.guard';
 import { AuthModule } from './modules/authmodule/auth.module';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule } from 'ngx-ui-loader';
 import { DecimalPipe } from '@angular/common';
-
 @NgModule({
   declarations: [
     AppComponent,
-
- 
   ],
   imports: [
     BrowserModule,
@@ -21,7 +18,7 @@ import { DecimalPipe } from '@angular/common';
     NgxUiLoaderRouterModule,
     AuthModule,
   ],
-  providers: [AuthGuard,DecimalPipe],
+  providers: [AuthGuard, DecimalPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

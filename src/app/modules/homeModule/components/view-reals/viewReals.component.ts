@@ -3,8 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { StoreService } from 'src/app/core/services/firestore-service/store.service';
-import { parentId } from 'src/app/core/environment';
-import { clearGlobalAppDefaultCred } from 'firebase-admin/lib/app/credential-factory';
+import { parentId } from 'src/app/core/constant';
 @Component({
   selector: 'app-view-reals',
   templateUrl: './viewReals.component.html',
@@ -17,7 +16,7 @@ export class ViewRealsComponent {
   childComment: any = [];
   data: any;
   postlike: number = 0;
-  postLike2: any = [];
+  postlikesCollection: any = [];
   title = 'instagram';
   allReels = new Subject<any>();
   allReelsData: any[] = [];
@@ -41,16 +40,13 @@ export class ViewRealsComponent {
   }
   like(postId: any) {
     this.store.Getlike(postId, 'reelsLike').then((res: any) => {
-      console.log(res)
-      this.postLike2 = res
-      this.postlike = res.length
-      console.log(this.postlike)
+    this.postlikesCollection=res
     })
   }
   postLike(postId: any) {
     this.store.checkUser(postId, 'reelsLike').then((res: any) => {
       console.log(res)
-      if (res.length >= 1) {
+      if (res.length > 1) {
         this.like(postId);
         this.postlike = this.postlike - 1
         this.store.deleteLike(postId, 'reelsLike');
@@ -83,14 +79,12 @@ export class ViewRealsComponent {
       this.store.getComment(postData, postData.id).then((res: any) => {
         this.grandChildComment = res
         console.log(res)
-
       })
     }
   }
   commentOnPost(id: any, postData: any) {
     if (id == 0) {
       this.store.addComment(this.commentForm.value, postData, parentId)
-    
     }
     else {
       this.store.addComment(this.commentForm.value, postData, postData.id)

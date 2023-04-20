@@ -18,7 +18,4 @@ this.reelServie.getPerc().subscribe((res:any)=>{
   }
 })
 }
-  title = 'instagram';
-  hello:string='';
-
 }

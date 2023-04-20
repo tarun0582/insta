@@ -1,30 +1,28 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { sidenavLink } from 'src/app/core/environment';
 import { AuthenticationService } from 'src/app/core/services/authentication-services/authentication.service';
-
+import { routing  } from 'src/app/core/constant';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-ViewReels() {
-  this.route.navigateByUrl("/home/viewreels")
+report() {
+  this.route.navigateByUrl('/home/report')
 }
-CreateReals() {
-  this.route.navigateByUrl("/home/createreals")
-}
-Home() {
-  this.route.navigateByUrl("/home/homepost")
-
-}
-  navBar:any=sidenavLink
-  constructor(private authData:AuthenticationService ,private route:Router){
+  routing :{}=routing
+  constructor(private authData: AuthenticationService, private route: Router) {}
+  viewReels = () => this.route.navigateByUrl(routing.home.view_reels_url);
+  createReals = () => this.route.navigateByUrl(routing.home.create_reals_url);
+  home = () => this.route.navigateByUrl(routing.home.home_post_url);
+  logOut = () => {
+    this.authData.logout();
+    this.route.navigateByUrl(routing.home.login_url);
   }
-logOut() {
-  this.authData.logout();
-  this.route.navigateByUrl("/main/login")
-}
-  title = 'instagram';
+   nav_link=[
+    { label: 'Logout', action: this.logOut },
+    { label: 'Home Post', action: this.home },
+    { label: 'Create Real', action: this.createReals },
+    { label: 'View Real', action: this.viewReels }]
 }

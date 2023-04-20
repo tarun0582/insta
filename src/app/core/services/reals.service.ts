@@ -53,7 +53,7 @@ export class RealsService  {
     };
     this.store.collection(`reels`).add(reels)
     .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef.id,'reels');
     })
     .catch((error) => {
       console.error("Error adding document: ", error);

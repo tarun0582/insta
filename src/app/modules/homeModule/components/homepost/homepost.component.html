@@ -1,46 +1,46 @@
 <div class="d-flex justify-content-center" *ngFor="let data of allpostData">
   <div class="post">
     <div class="header">
-      <img class="profile-pic" src={{data.imageUrl}} alt="Profile picture">
+      <img class="profile-pic" src={{data?.imageUrl}} alt="Profile picture">
       <h2 class="username">{{data?.email}}</h2>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item btn" (click)="report(data.postId)">report</li>
+        <li class="list-group-item btn" (click)="report(data?.postId)">report</li>
       </ul>
     </div>
-    <img class="post-image" src={{data.imageUrl}} alt="Post image">
+    <img class="post-image" src={{data?.imageUrl}} alt="Post image">
     <div class="caption">
       <div class="username">{{data?.email}}</div>
       <p class="description">{{data?.description}}</p>
       <div class="hashtags">#hashtag1 #hashtag2</div>
     </div>
 
-    <input class="btn btn-primary" value="view likes" (click)="like(data.postId)">
+    <input class="btn btn-primary" value="view likes" (click)="like(data?.postId)">
     <div>{{postlike}}</div>
     <div *ngFor="let username of postLike2">
-      <div>{{username.email}}</div>
+      <div>{{username?.email}}</div>
     </div>
     <br>
-    <input value="like" class="btn-primary btn" (click)="postLike(data.postId)">
+    <input value="like" class="btn-primary btn" (click)="postLike(data?.postId)">
     <br>
     <div class="comments">
       <div *ngFor="let comment of parentComment">
-        <div *ngIf="data.postId==comment.postId">
-          <h2>{{comment.content}}</h2>
+        <div *ngIf="data?.postId==comment?.postId">
+          <h2>{{comment?.content}}</h2>
           <input class="btn btn-primary" value="view Reply2" (click)="viewComments(1,comment)">
           <div class="comments">
             <div *ngFor="let childcomment of  childComment">
-              <div *ngIf="comment.id==childcomment.parentId">
-                <h2 style="margin-left: 40px;">{{childcomment.content}}</h2>
+              <div *ngIf="comment?.id==childcomment?.parentId">
+                <h2 style="margin-left: 40px;">{{childcomment?.content}}</h2>
                 <input style="margin-left: 40px;" class="btn btn-primary" value="view 3rd "
                   (click)="viewComments(2, childcomment)">
                 <div class="comments">
                   <div *ngFor="let grandChildcomment of  grandChildComment">
-                    <h2 *ngIf="childcomment.id== grandChildcomment.parentId" style="margin-left: 80px;">
-                      {{grandChildcomment.content}}</h2>
+                    <h2 *ngIf="childcomment?.id== grandChildcomment?.parentId" style="margin-left: 80px;">
+                      {{grandChildcomment?.content}}</h2>
                   </div>
                 </div>
                 <form style="margin-left: 40px" [formGroup]=" commentForm" (ngSubmit)="commentOnPost(2, childcomment)">
-                  <input type="text" placeholder="Add a comment..." formControlName="msg">
+                  <input type="text" placeholder="Add a comment...." formControlName="msg">
                   <button>Post</button>
                 </form>
               </div>
@@ -48,7 +48,7 @@
           </div>
           <br>
           <form [formGroup]=" commentForm" (ngSubmit)="commentOnPost(1,comment)">
-            <input type="text" placeholder="Add a comment..." formControlName="msg">
+            <input type="text" placeholder="Add a comment...." formControlName="msg">
             <button>Post</button>
           </form>
         </div>
@@ -60,11 +60,9 @@
     </div>
     <div>
       <form [formGroup]=" commentForm" (ngSubmit)="commentOnPost(0,data)">
-        <input type="text" placeholder="Add a comment..." formControlName="msg">
+        <input type="text" placeholder="Add a comment?.?.?." formControlName="msg">
         <button>Post</button>
       </form>
-
     </div>
-
   </div>
 </div>

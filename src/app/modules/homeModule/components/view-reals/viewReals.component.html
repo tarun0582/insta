@@ -18,7 +18,7 @@
             <p class="description">description here</p>
             <div class="hashtags">#hashtag1 #hashtag2</div>
           </div>
-        <div *ngFor="let username of postLike2">
+        <div *ngFor="let username of postlikesCollection">
           <div *ngIf="username?.postId==reels?.postId
           ">{{username.email}}</div>
         </div>

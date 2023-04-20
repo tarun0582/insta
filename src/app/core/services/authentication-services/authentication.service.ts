@@ -10,7 +10,7 @@ export class AuthenticationService {
   SignIn(email: string, password: string) {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
-      .then((result:any) => {
+      .then((result: any) => {
         if (result.user?.emailVerified !== true) {
           this.SendVerificationMail();
           window.alert(
@@ -19,7 +19,7 @@ export class AuthenticationService {
         }
         if (result.user?.emailVerified !== false) {
           return result;
-      }
+        }
       })
       .catch((error) => {
         window.alert(error.message);
@@ -34,50 +34,45 @@ export class AuthenticationService {
           window.alert(
             'Please validate your email address. Kindly check your inbox. and then login again'
           );
-         
-        }   
-        console.log(result) 
-         return result;
-        
+        }
+        console.log(result)
+        return result;
       })
       .catch((error) => {
         window.alert(error.message);
       });
   }
   SendVerificationMail() {
+    console.log(this.afAuth.currentUser)
     return this.afAuth.currentUser
       .then((user) => {
         console.log(user)
         return user?.sendEmailVerification();
-
       })
       .then(() => {
         ;
       });
   }
-  resetPasswordInit(email: string) { 
- 
+  resetPasswordInit(email: string) {
     return this.afAuth.sendPasswordResetEmail(
-      email, 
+      email,
       { url: 'http://localhost:4200/main/login' })
-     
-    } 
-    registerToken(tokenName:string,value:string)
-    {
-        localStorage.setItem(tokenName,value)
-    }
-    removeToken(){
-      localStorage.clear();
-    }
-    getToken(tokenName:string) {
-      return localStorage.getItem(tokenName);
-    }  
-    isLoggedIn() {
-      return this.getToken('token') !== null;
-    }
-    logout() {
-      localStorage.removeItem('token');
-      localStorage.clear();
-      this.route.navigate(['/main/login']);
-    }
+  }
+  registerToken(tokenName: string, value: string) {
+    localStorage.setItem(tokenName, value)
+  }
+  removeToken() {
+    localStorage.clear();
+  }
+  getToken(tokenName: string) {
+    return localStorage.getItem(tokenName);
+  }
+  isLoggedIn() {
+    return this.getToken('token') !== null;
+  }
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.clear();
+    this.route.navigate(['/main/login']);
+  }
 }
